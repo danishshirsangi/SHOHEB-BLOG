@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Blog Post</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 id="blog-title" class="mb-4"></h1>
+    <div id="blog-content"></div>
+    <button class="btn btn-primary mt-4" onclick="window.history.back();">Back to Homepage</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const blogId = params.get('id');
+
+      let blog = null;
+
+      // Retrieve blogs from localStorage
+      const storedBlogs = localStorage.getItem('blogs');
+      const blogs = storedBlogs ? JSON.parse(storedBlogs) : [];
+
+      // Find the blog with the given ID
+      blog = blogs.find(b => b.id == blogId);
+
+      if (blog) {
+        document.getElementById('blog-title').innerText = blog.title;
+        document.getElementById('blog-content').innerHTML = blog.content;
+      } else {
+        document.getElementById('blog-title').innerText = 'Blog Post Not Found';
+        document.getElementById('blog-content').innerHTML = '';
+      }
+    });
+  </script>
+</body>
+</html>
